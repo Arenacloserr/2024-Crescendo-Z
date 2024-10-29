@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.StateManager;
 import frc.robot.StateManager.State;
+import frc.robot.commands.RevvingCommand;
 import frc.robot.subsystems.indexer.Indexer;
 
 public class LEDs extends SubsystemBase {
@@ -261,11 +262,13 @@ public class LEDs extends SubsystemBase {
                 break;      
         }
 
-        if(yellow){
+        if (yellow) {
             color = Color.kYellow;
         }
-        
-        if (Indexer.getInstance().isStoring()){
+        if (revving) {
+            RevvingCommand(1, 2);
+        } 
+        else if (Indexer.getInstance().isStoring()) {
             blink = BlinkState.SlOW;
         } else {
             blink = BlinkState.SOLID;
