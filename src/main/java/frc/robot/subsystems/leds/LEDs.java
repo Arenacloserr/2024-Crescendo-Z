@@ -266,7 +266,7 @@ public class LEDs extends SubsystemBase {
             color = Color.kYellow;
         }
         if (revving) {
-            RevvingCommand(1, 2);
+            // new RevvingCommand();
         } 
         else if (Indexer.getInstance().isStoring()) {
             blink = BlinkState.SlOW;

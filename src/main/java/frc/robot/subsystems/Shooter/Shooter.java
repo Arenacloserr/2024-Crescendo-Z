@@ -12,6 +12,8 @@ import frc.robot.StateManager;
 import frc.robot.Constants.ShooterSetpoints;
 import frc.robot.Constants.Tolerances;
 import frc.robot.subsystems.MAXSwerve.Drive;
+import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.intake.IntakeConstants;
 import frc.robot.subsystems.vision.AprilTagVision.Vision;
 
 public class Shooter extends SubsystemBase {
@@ -148,11 +150,22 @@ public class Shooter extends SubsystemBase {
         );
     }
 
+    public boolean isShooting() {
+        return inputs.topShooterCurrent > 5 && inputs.topShooterMotorVelocityRPM > 100 && !Indexer.getInstance().isStoring();
+    }
+
+    public double currentRPM() {
+        return inputs.topShooterMotorVelocityRPM;
+    }
+
+    public double currentMAX() {
+        return topShootingSpeed;            
+    }
+
     @Override
     public void periodic(){
         io.updateInputs(inputs);
         Logger.processInputs("Shooter", inputs);
-
         io.runShooterMotorsRPM(topShootingSpeed, bottomShootingSpeed);
     }
 }

@@ -302,6 +302,7 @@ public class RobotContainer {
 
     if (Constants.currentMode == Mode.REAL){
       new Trigger(indexer::isStoring).onTrue(rumbleCommand(0.6).withTimeout(0.75));
+      new Trigger(shooter::isShooting).debounce(0.05).whileTrue(new RevvingCommand(shooter::currentRPM, shooter::currentMAX));
       new Trigger(intake::isIntaking).debounce(0.1).whileTrue(Commands.parallel(
         new RainbowCommand(() -> 0.8),
         rumbleCommand(0.4)

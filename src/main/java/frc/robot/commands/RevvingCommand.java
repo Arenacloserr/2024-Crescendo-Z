@@ -25,14 +25,17 @@ public class RevvingCommand extends Command {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        leds.setTopColorHSV(0, 0, 0);
+        leds.setOutput();
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         // Hue is 0-180
         for (int i = 0; i < leds.getLength(); i++) {
-            if (RPM >= (MAX*((i*(100/leds.getLength()))/100))) {
+            if (this.RPM >= (this.MAX*(((double) i*(100/((double) leds.getLength()/1)))/100))) { // edit length if needed
                 leds.setHSVIndex(i, 0, 0, 0);
             }
             else {
