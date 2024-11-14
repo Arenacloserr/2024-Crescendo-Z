@@ -40,7 +40,7 @@ deploy {
     }
 }
 
-project.compileJava.dependsOn(createVersionFile)
+// project.compileJava.dependsOn(createVersionFile)
 gversion {
   srcDir       = "src/main/java/"
   classPackage = "frc.robot"
@@ -111,7 +111,7 @@ task(eventDeploy) {
         }
     }
 }
-createVersionFile.dependsOn(eventDeploy)
+// createVersionFile.dependsOn(eventDeploy)
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 5.
