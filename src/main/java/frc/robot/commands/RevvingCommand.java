@@ -2,6 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+// 13. 26 in total
+// 11. 22 total
+// 48
+
 package frc.robot.commands;
 
 import frc.robot.subsystems.Shooter.Shooter;
@@ -38,9 +42,10 @@ public class RevvingCommand extends Command {
         this.RPM = shooter.currentRPM();
         this.MAX = shooter.currentMAX();
         // Hue is 0-180
-        for (int i = 0; i < leds.getLength(); i++) {
-            if (this.RPM >= (this.MAX*(((double) i*(100/((double) leds.getLength()/1)))/100))) { // edit length if needed
-                leds.setHSVIndex(i, 100, 100, 100);
+        for (int i = 0; i < leds.getLength()/4; i++) {
+            if (this.RPM >= (this.MAX*(((double) i*(100/((double) leds.getLength()/4)))/100))) { // edit length if needed
+                leds.setHSVIndex(leds.getLength()/2 + i, 100, 100, 100);
+                leds.setHSVIndex(3*leds.getLength()/4 + i, 100, 100, 100);
             }
             else {
                 break;
