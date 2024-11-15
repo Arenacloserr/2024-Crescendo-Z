@@ -299,8 +299,9 @@ public class RobotContainer {
     new Trigger(() -> Math.abs(OIConstants.operatorController.getLeftY()) > 0.15)
       .whileTrue(
         new RainbowCommand(() -> MathUtil.applyDeadband(OIConstants.operatorController.getLeftY(), 0.15)));
+        new Trigger(shooter::isShooting).debounce(0.05).whileTrue(new RevvingCommand(shooter::currentRPM, shooter::currentMAX));
 
-    if (Constants.currentMode == Mode.REAL){
+    if (Constants.currentMode == Mode.REAL){ // try rainbow command
       new Trigger(indexer::isStoring).onTrue(rumbleCommand(0.6).withTimeout(0.75));
       new Trigger(shooter::isShooting).debounce(0.05).whileTrue(new RevvingCommand(shooter::currentRPM, shooter::currentMAX));
       new Trigger(intake::isIntaking).debounce(0.1).whileTrue(Commands.parallel(

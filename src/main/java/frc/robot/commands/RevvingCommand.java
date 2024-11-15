@@ -41,7 +41,7 @@ public class RevvingCommand extends Command {
     public void execute() {
         this.RPM = shooter.currentRPM();
         this.MAX = shooter.currentMAX();
-        // Hue is 0-180
+
         for (int i = 0; i < leds.getLength()/4; i++) {
             if (this.RPM >= (this.MAX*(((double) i*(100/((double) leds.getLength()/4)))/100))) { // edit length if needed
                 leds.setHSVIndex(leds.getLength()/2 + i, 100, 100, 100);
@@ -54,7 +54,25 @@ public class RevvingCommand extends Command {
 
         leds.setOutput();
     }
+/*
+    @Override
+    public void execute() {
+        this.RPM = shooter.currentRPM();
+        this.MAX = shooter.currentMAX();
 
+        for (int i = 0; i < leds.getLength(); i++) {
+            if (this.RPM >= (this.MAX*(((double) i*(100/((double) leds.getLength()/1)))/100))) { // edit length if needed
+                leds.setHSVIndex(i, 100, 100, 100);
+                leds.setHSVIndex(i, 100, 100, 100);
+            }
+            else {
+                break;
+            }
+        }
+
+        leds.setOutput();
+    }
+*/
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {}
