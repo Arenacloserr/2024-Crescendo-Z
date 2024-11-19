@@ -18,12 +18,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RevvingCommand extends Command {
     LEDs leds = LEDs.getInstance();
     Shooter shooter = Shooter.getInstance();
-    double RPM;
-    double MAX;
+    DoubleSupplier RPM;
+    DoubleSupplier MAX;
+    double kRPM;
+    double kMAX;
 
     public RevvingCommand(DoubleSupplier RPM, DoubleSupplier MAX) {
-        this.RPM = RPM.getAsDouble();
-        this.MAX = MAX.getAsDouble();
+        this.RPM = RPM;
+        this.MAX = MAX;
 
         addRequirements(leds);
     }
@@ -39,11 +41,14 @@ public class RevvingCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        this.RPM = shooter.currentRPM();
-        this.MAX = shooter.currentMAX();
+        // this.RPM = shooter.currentRPM();
+        // this.MAX = shooter.currentMAX();
+
+        this.kRPM = RPM.getAsDouble();
+        this.kMAX = MAX.getAsDouble();
 
         for (int i = 0; i < leds.getLength()/4; i++) {
-            if (this.RPM >= (this.MAX*(((double) i*(100/((double) leds.getLength()/4)))/100))) { // edit length if needed
+            if (this.kRPM >= (this.kMAX*(((double) i*(100/((double) leds.getLength()/4)))/100))) { // edit length if needed
                 leds.setHSVIndex(leds.getLength()/2 + i, 100, 100, 100);
                 leds.setHSVIndex(3*leds.getLength()/4 + i, 100, 100, 100);
             }

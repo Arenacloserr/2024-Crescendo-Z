@@ -154,6 +154,10 @@ public class Shooter extends SubsystemBase {
         return inputs.topShooterCurrent > 5 && inputs.topShooterMotorVelocityRPM > 100 && !Indexer.getInstance().isStoring();
     }
 
+    public boolean test1() {
+        return true;
+    }
+
     public double currentRPM() {
         return inputs.topShooterMotorVelocityRPM;
     }

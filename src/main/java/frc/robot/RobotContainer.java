@@ -211,9 +211,9 @@ public class RobotContainer {
       StateManager.toggleAutomate();
       leds.toggleYellow();
     }));
-    OIConstants.driverController.povRight().whileTrue(shooter.revSpeakerMedium());
-    OIConstants.driverController.povUp().whileTrue(shooter.revSpeakerFast());
-    OIConstants.driverController.povDown().whileTrue(shooter.revSpeakerSlow());
+    OIConstants.driverController.povRight().whileTrue(shooter.revSpeakerMedium().alongWith(new RevvingCommand(() -> shooter.currentRPM(), () -> shooter.currentMAX())));
+    OIConstants.driverController.povUp().whileTrue(shooter.revSpeakerFast().alongWith(new RevvingCommand(() -> shooter.currentRPM(), () -> shooter.currentMAX())));
+    OIConstants.driverController.povDown().whileTrue(shooter.revSpeakerSlow().alongWith(new RevvingCommand(() -> shooter.currentRPM(), () -> shooter.currentMAX())));
     OIConstants.driverController.y().whileTrue(indexer.forwards());
 
        // Gamepiece align
@@ -296,14 +296,17 @@ public class RobotContainer {
       Commands.startEnd(() -> pivot.toggleIdleMode(), () -> pivot.toggleIdleMode())
         .ignoringDisable(true));
 
+    // new Trigger(() -> Math.abs(OIConstants.operatorController.getRightY()) > 0.15).whileTrue(new RainbowCommand(() -> 0.8));
     new Trigger(() -> Math.abs(OIConstants.operatorController.getLeftY()) > 0.15)
       .whileTrue(
         new RainbowCommand(() -> MathUtil.applyDeadband(OIConstants.operatorController.getLeftY(), 0.15)));
-        new Trigger(shooter::isShooting).debounce(0.05).whileTrue(new RevvingCommand(shooter::currentRPM, shooter::currentMAX));
+        //new Trigger(shooter::isShooting).debounce(0.05).whileTrue(new RevvingCommand(shooter::currentRPM, shooter::currentMAX));
 
     if (Constants.currentMode == Mode.REAL){ // try rainbow command
       new Trigger(indexer::isStoring).onTrue(rumbleCommand(0.6).withTimeout(0.75));
-      new Trigger(shooter::isShooting).debounce(0.05).whileTrue(new RevvingCommand(shooter::currentRPM, shooter::currentMAX));
+      // new Trigger(shooter::isShooting).debounce(0.05).whileTrue(new RevvingCommand(shooter::currentRPM, shooter::currentMAX));
+      // new Trigger(shooter::test1).onTrue(new RainbowCommand(() -> 0.8));
+      // new Trigger(shooter::isShooting).onTrue(rumbleCommand(0.6).withTimeout(0.75));
       new Trigger(intake::isIntaking).debounce(0.1).whileTrue(Commands.parallel(
         new RainbowCommand(() -> 0.8),
         rumbleCommand(0.4)
