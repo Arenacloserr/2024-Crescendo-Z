@@ -47,10 +47,12 @@ public class RevvingCommand extends Command {
         this.kRPM = RPM.getAsDouble();
         this.kMAX = MAX.getAsDouble();
 
-        for (int i = 0; i < leds.getLength()/4; i++) {
+        for (int i = 0; i < leds.getLength()-1; i++) {
             if (this.kRPM >= (this.kMAX*(((double) i*(100/((double) leds.getLength()/4)))/100))) { // edit length if needed
-                leds.setHSVIndex(leds.getLength()/2 + i, 100, 100, 100);
-                leds.setHSVIndex(3*leds.getLength()/4 + i, 100, 100, 100);
+                //leds.setHSVIndex(leds.getLength()/2 + i, 100, 100, 100);
+                //leds.setHSVIndex(i, 100, 100, 100);
+                leds.setPartRGB(240, 240, 240, i, i+1);
+                //leds.setHSVIndex(3*leds.getLength()/4 + i, 100, 100, 100);
             }
             else {
                 break;
